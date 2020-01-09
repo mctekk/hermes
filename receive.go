@@ -6,9 +6,11 @@ import (
 	"github.com/streadway/amqp"
 	"github.com/joho/godotenv"
 	"os"
-
+	"bytes"
+	"encoding/json"
   )
   
+type Message map[string]interface{}
 
 func failOnError(err error, msg string) {
 	if err != nil {
@@ -28,7 +30,6 @@ func main(){
 	conn, err := amqp.Dial(rabbitserver)
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
-
 	ch, err := conn.Channel()
 	failOnError(err, "Failed to open a channel")
 	defer ch.Close()
@@ -58,9 +59,15 @@ func main(){
 	  go func() {
 		for d := range msgs {
 		  log.Printf("Received a message: %s", d.Body)
+		  processMessage(d.Body)
 		}
 	  }()
 	  
 	  log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
 	  <-forever
 }
+
+func processMessage(body []byte){
+	log.Printf(string(body))
+}
+
