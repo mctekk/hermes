@@ -36,7 +36,7 @@ func sendMessage(w http.ResponseWriter, req *http.Request) {
 	  )
 	  failOnError(err, "Failed to declare a queue")
 	  
-	  body := `{"title":"Hello World", "message":"This my first hello world on hermes", "type":"tweet"}`
+	  body := `{"user_id":"4134", "message_type_id":"7564", "added_date":"2014-01-20 01:46:00", "object_action": "save", "object_type":"tweet", "text":" "}`
 	  err = ch.Publish(
 		"",     // exchange
 		q.Name, // routing key

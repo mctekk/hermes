@@ -10,9 +10,12 @@ import (
   )
   
 type Message struct {
-	Title string
-	Message string
-	Type string
+	UserId string
+	MessageTypeId string
+	AddedDate string 
+	ObjectAction string
+	ObjectType string
+	Text string
 }
 
 func failOnError(err error, msg string) {
@@ -75,6 +78,6 @@ func processMessage(body []byte){
 	log.Printf(bodyJson)
 	var message Message
 	json.Unmarshal([]byte(bodyJson), &message)
-	log.Printf("Species: %s, Description: %s", message.Title, message.Message)
+	// log.Printf("Species: %s, Description: %s", message.Title, message.Message)
 }
 
