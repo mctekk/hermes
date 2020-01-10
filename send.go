@@ -8,6 +8,7 @@ import (
 )
 
 
+
 func setupResponse(w *http.ResponseWriter, req *http.Request) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
     (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
@@ -35,7 +36,7 @@ func sendMessage(w http.ResponseWriter, req *http.Request) {
 	  )
 	  failOnError(err, "Failed to declare a queue")
 	  
-	  body := "{'name':'Hello World'}"
+	  body := `{"title":"Hello World", "message":"This my first hello world on hermes", "type":"tweet"}`
 	  err = ch.Publish(
 		"",     // exchange
 		q.Name, // routing key

@@ -6,11 +6,14 @@ import (
 	"github.com/streadway/amqp"
 	"github.com/joho/godotenv"
 	"os"
-	"bytes"
 	"encoding/json"
   )
   
-type Message map[string]interface{}
+type Message struct {
+	Title string
+	Message string
+	Type string
+}
 
 func failOnError(err error, msg string) {
 	if err != nil {
@@ -68,6 +71,10 @@ func main(){
 }
 
 func processMessage(body []byte){
-	log.Printf(string(body))
+	bodyJson := string(body)
+	log.Printf(bodyJson)
+	var message Message
+	json.Unmarshal([]byte(bodyJson), &message)
+	log.Printf("Species: %s, Description: %s", message.Title, message.Message)
 }
 
